@@ -214,9 +214,9 @@ document.addEventListener("keydown", function(event) {
 document.addEventListener("click", function(event) {
     var clickX = mouse[0];
     var clickY = mouse[1];
-    if(mouse[0] > 360 && mouse[0] < 860 && mouse[1] > 75 && mouse[1] < 575) {
-        clickX = ((clickX - 360) / 250.0) - 1.0;
-        clickY = ((clickY - 75) / 250.0) - 1.0;
+    if(mouse[0] > 360 && mouse[0] < 960 && mouse[1] > 75 && mouse[1] < 675) {
+        clickX = ((clickX - 360) / 300.0) - 1.0;
+        clickY = ((clickY - 75) / 300.0) - 1.0;
         if(mode) {
             focus[0] += clickX * frame;
             focus[1] += clickY * frame;
