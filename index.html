@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Mandelbrot set Viewer</title>
+        <link rel="stylesheet" href="mandelbrot.css"/>
+        <script src="mandelbrot.js" defer></script>
+    </head>
+    <body>
+        <header><h1>Mandelbrot Set Viewer!</h1></header>
+        <canvas class="view" id="view" width="500" height="500">Uh-Oh! It looks like there was a problem displaying the canvas!</canvas>
+        <div class="options">
+            <h2 class="content">View Settings</h2>
+            <br>
+            <div class="content">
+            <label for="maxIterations">Maximum iterations</label>
+            <input id="maxIterations" type="number" value="2000">
+            <br><br>
+            <label for="gradient">Color gradient width</label>
+            <input id="gradient" type="number" value="0.07">
+            <br><br>
+            <label for="offset">Color gradient offset</label>
+            <input id="offset" type="range" value="0">
+            <br><br>
+            <label for="colorScheme">Color Scheme</label>
+            <select id="colorScheme">
+                <option value=1>Raspberry-Mint</option>
+                <option value=0>Sunset</option>
+                <option value=2>Sky and dirt</option>
+                <option value=3>Ocean Luminescence</option>
+                <option value=4>Strawberry-Mint</option>
+                <option value=5>Chromatic</option>
+            </select>
+            <br><br>
+            <button id="accept" class="content">Accept values</button>
+            <br><br>
+            <label for="goTo">Choose Location</label>
+            <select id="goTo">
+                <option value="-1">None</option>
+                <option value=0>Fractal Garden</option>
+                <option value=1>Amoeba</option>
+                <option value=2>Spikey Spirals</option>
+                <option value=3>Decorated King</option>
+                <option value=4>Hypnosis</option>
+                <option value=5>Seahorse valley Julia set</option>
+                <option value=6>Lucifer's crown</option>
+                <option value=7>Angel</option>
+                <option value=8>Swirls and Eddies</option>
+                <option value=9>Spiral galaxy</option>
+                <option value=10>Star cluster</option>
+                <option value=11>Many Arms</option>
+                <option value=12>Fuzzy Spiral</option>
+                <option value=13>Looking to infinity</option>
+                <option value=14>Sunrise Julia set</option>
+                <option value=15>Emerald and Amethyst</option>
+                <option value=16>Red Velvet Swirl</option>
+                <option value=17>Strawberry Ice cream</option>
+                <option value=19>Wormhole</option>
+                <option value=18>Reference: Needle Minibrot</option>
+            </select>
+            <br><br>
+            <h2 class="content">Controls</h2>
+            <p>Arrow Keys: move frame</p>
+            <p>WASD: move frame only in mandelbrot set.</p>
+            <p>'=': zoom in</p>
+            <p>'-': zoom out</p>
+            <p>Shift + '=': zoom in only mandelbrot set. (doesn't update screen)</p>
+            <p>Shift + '-': zoom out only mandelbrot set. (doesn't update screen)</p>
+            <p>'j': toggle Julia set/Mandelbrot set mode</p>
+            <p>Click: move focus on point clicked and zoom in</p>
+            <p>Tab: return view to origin and set frame width to 4</p>
+
+        </div>
+        <div class="info">
+            <h2 class="content">About the Mandelbrot Set</h2>
+            <p class="content">The Mandelbrot Set is a set of points on the complex plane that are defined by iterating a function on each point to determine if it is in the set.
+                To iterate the function on a given point C, set Z equal to C. The function is as follows:</p>
+            <p class="equation">Z -> Z^2 + C</p>
+            <p class="content">Notice that C stays the same, while Z changes. Iterate this function until Z leaves the circle whose center is the origin and whose radius is 2.
+                If Z never leaves the circle, then C is in the set, otherwise it is not in the set. No program can iterate infinitely, so this program maxes out at a default of 2000 iterations.
+                Points in the set are colored black, while points not in the set are colored based on the number of iterations it took for that point to leave the circle.
+                Julia sets are like the mandelbrot set, but instead of adding each unique C, you add the same value of C to every iteration point. Because of this, there is a julia set for every point on the mandelbrot set.
+                To view the julia set for the point you are focused on, press j. The j key also toggles back to the mandelbrot set view.
+            </p>
+            <h4 class="content">Notes:</h4>
+            <p class="content">* To update the settings within the viewer, press 'Accept Values'</p>
+            <p class="content">* To move around the viewer, make sure your cursor is inside the view box</p>
+            <p class="content">* Sometimes it takes a long time to load the picture. Be patient, and don't press too many keys before it loads.</p>
+        </div>
+    </body>
+</html>
