@@ -231,8 +231,8 @@ view.addEventListener("click", function(event) {
 });
 
 document.addEventListener("mousemove", function(event) {
-    mouse[0] = event.clientX;
-    mouse[1] = event.clientY;
+    mouse[0] = event.pageX;
+    mouse[1] = event.pageY;
 });
 
 acceptButton.addEventListener("click", function() {
