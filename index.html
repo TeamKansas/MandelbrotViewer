@@ -8,9 +8,8 @@
     </head>
     <body>
         <header><h1>Mandelbrot Set Viewer!</h1></header>
-        <canvas class="view" id="view" width="600" height="600">Uh-Oh! It looks like there was a problem displaying the canvas!</canvas>
-        <div class="options">
-            <h2 class="content">View Settings</h2>
+        <canvas class="view" id="view" width="700" height="700">Uh-Oh! It looks like there was a problem displaying the canvas!</canvas>
+        <article class="options">
             <br>
             <div class="content">
             <label for="maxIterations">Maximum iterations</label>
@@ -31,6 +30,9 @@
                 <option value=4>Strawberry-Mint</option>
                 <option value=5>Chromatic</option>
             </select>
+            <p>Image Dimensions</p>
+            <input id="dimensionsX" type="number" value="700">
+            <input id="dimensionsY" type="number" value="700">
             <br><br>
             <button id="accept" class="content">Accept values</button>
             <br><br>
@@ -59,7 +61,7 @@
                 <option value=18>Reference: Needle Minibrot</option>
             </select>
             <br><br>
-            <h2 class="content">Controls</h2>
+            <hr>
             <p>Arrow Keys: move frame</p>
             <p>WASD: move frame only in mandelbrot set.</p>
             <p>'=': zoom in</p>
@@ -68,10 +70,10 @@
             <p>Shift + '-': zoom out only mandelbrot set. (doesn't update screen)</p>
             <p>'j': toggle Julia set/Mandelbrot set mode</p>
             <p>Click: move focus on point clicked and zoom in</p>
-            <p>Tab: return view to origin and set frame width to 4</p>
+            <p>Enter: return view to origin and set frame width to 4</p>
 
-        </div>
-        <div class="info">
+        </article>
+        <article class="info">
             <h2 class="content">About the Mandelbrot Set</h2>
             <p class="content">The Mandelbrot Set is a set of points on the complex plane that are defined by iterating a function on each point to determine if it is in the set.
                 To iterate the function on a given point C, set Z equal to C. The function is as follows:</p>
@@ -86,6 +88,6 @@
             <p class="content">* To update the settings within the viewer, press 'Accept Values'</p>
             <p class="content">* To move around the viewer, make sure your cursor is inside the view box</p>
             <p class="content">* Sometimes it takes a long time to load the picture. Be patient, and don't press too many keys before it loads.</p>
-        </div>
+        </article>
     </body>
 </html>
