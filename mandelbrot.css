@@ -21,16 +21,6 @@ header {
 .content {
     margin: 4px;
 }
-
-.info {
-    border: solid darkgray 3px;
-    background-color: rgb(55,75,100);
-    position:absolute;
-    top: 5%;
-    left: 75%;
-    height: fit-content;
-    width: 23%;
-}
 .equation {
     font-family: 'Andale Mono';
     margin: 20px;
