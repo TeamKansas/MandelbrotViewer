@@ -4,23 +4,24 @@ const ctx = view.getContext("2d");
 const acceptButton = document.getElementById("accept");
 const goTo = document.getElementById("goTo");
 
-const WID = view.width;
-const HEI = view.height;
-const HWID = WID/2.0;
-const HHEI = HEI/2.0;
+var WID = view.width;
+var HEI = view.height;
+var HWID = WID/2.0;
+var HHEI = HEI/2.0;
+var xratio = WID / HEI;
+var yratio = 1;
+
+var leftCanvas = view.getBoundingClientRect().left;
+var topCanvas = view.getBoundingClientRect().top;
 
 const PI = Math.PI;
 const TAU = PI * 2;
-
-
 
 var gradWid = 0.07;
 var offset = 0;
 
 var imgData = ctx.getImageData(0,0,view.width,view.height);
 
-// var frame = 1.7763568394002505e-10;
-// var focus = [-0.2660503338339083,-0.6512455825148415];
 var frame = 2;
 var focus = [0,0];
 var jframe = 2;
@@ -77,11 +78,12 @@ function mandelbrot() {
     var i;
     var r, g, b;
     var index;
+
     var colors = colorScheme[scheme];
     for(var x = 0; x < WID; ++x) {
         for(var y = 0; y < HEI; ++y) {
-            xx = cx = (x - HWID) / HWID * frame + focus[0];
-            yy = cy = (y - HHEI) / HHEI * frame + focus[1];
+            xx = cx = (x - HWID) / HWID * frame * xratio + focus[0];
+            yy = cy = (y - HHEI) / HHEI * frame * yratio+ focus[1];
             for(i = 0; i < maxIterations && xx*xx + yy*yy < 4; ++i) {
                 tx = xx;
                 xx = xx*xx - yy*yy + cx;
@@ -106,11 +108,12 @@ function julia() {
     var i;
     var r, g, b;
     var index;
+
     colors = colorScheme[scheme];
     for(var x = 0; x < WID; ++x) {
         for(var y = 0; y < HEI; ++y) {
-            xx = cx = (x - HWID) / HWID * jframe + jfocus[0];
-            yy = cy = (y - HHEI) / HHEI * jframe + jfocus[1];
+            xx = cx = (x - HWID) / HWID * jframe * xratio + jfocus[0];
+            yy = cy = (y - HHEI) / HHEI * jframe * yratio+ jfocus[1];
             for(i = 0; i < maxIterations && xx*xx + yy*yy < 4; ++i) {
                 tx = xx;
                 xx = xx*xx - yy*yy + focus[0];
@@ -188,7 +191,7 @@ document.addEventListener("keydown", function(event) {
                 if(event.key != '_')
                     updateView();
                 break;
-            case 'Tab':
+            case 'Enter':
                 if(mode) {
                     frame = 2;
                     focus[0] = focus[1] = 0;
@@ -211,24 +214,20 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
-document.addEventListener("click", function(event) {
-    var clickX = mouse[0];
-    var clickY = mouse[1];
-    if(mouse[0] > 360 && mouse[0] < 960 && mouse[1] > 75 && mouse[1] < 675) {
-        clickX = ((clickX - 360) / 300.0) - 1.0;
-        clickY = ((clickY - 75) / 300.0) - 1.0;
-        if(mode) {
-            focus[0] += clickX * frame;
-            focus[1] += clickY * frame;
-            frame *= 0.5;
-        }
-        else {
-            jfocus[0] += clickX * jframe;
-            jfocus[1] += clickY * jframe;
-            jframe *= 0.5;
-        }
-        updateView();
+view.addEventListener("click", function(event) {
+    var clickX = ((mouse[0] - leftCanvas) / HWID) - 1.0;
+    var clickY = ((mouse[1] - topCanvas) / HHEI) - 1.0;
+    if(mode) {
+        focus[0] += clickX * frame * xratio;
+        focus[1] += clickY * frame * yratio;
+        frame *= 0.5;
     }
+    else {
+        jfocus[0] += clickX * jframe * xratio;
+        jfocus[1] += clickY * jframe * yratio;
+        jframe *= 0.5;
+    }
+    updateView();
 });
 
 document.addEventListener("mousemove", function(event) {
@@ -241,6 +240,21 @@ acceptButton.addEventListener("click", function() {
     gradWid = eval(document.getElementById("gradient").value);
     offset = (document.getElementById("offset").value / 100.0) * TAU;
     scheme = eval(document.getElementById("colorScheme").value);
+
+    WID = view.width = document.getElementById("dimensionsX").value;
+    HEI = view.height = document.getElementById("dimensionsY").value;
+    HWID = WID/2.0;
+    HHEI = HEI/2.0;
+    xratio = WID / HEI > 1 ? WID / HEI : 1.0;
+    yratio = HEI / WID > 1 ? HEI / WID : 1.0;
+
+    imgData = ctx.getImageData(0,0,view.width,view.height);
+    for(var x = 0; x < WID; ++x) {
+        for(var y = 0; y < HEI; ++y) {
+            imgData.data[y*WID*4 + x*4 + 3] = 255;
+        }
+    }
+
     console.log(scheme);
     updateView();
 });
