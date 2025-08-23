@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Mandelbrot set Viewer</title>
+        <link rel="stylesheet" href="mandelbrot.css"/>
+        <script src="mandelbrot.js" defer></script>
+    </head>
+    <body>
+        <header><h1>Fractal Viewer!</h1></header>
+        <div id="leftside">
+            <p id="coords" style="font-family: 'Courier New', Courier, monospace;">0 0</p>
+            <canvas class="view" id="orbits" width="500" height="500" left="">Uh-Oh! It looks like there was a problem displaying the canvas!</canvas>
+            <canvas class="view" id="view" width="500" height="500">Uh-Oh! It looks like there was a problem displaying the canvas!</canvas>
+        </div>
+        <div class="options">
+            <h2 class="content">View Settings</h2>
+            <!-- <br> -->
+            <div class="content">
+            <label for="gradient">Color gradient width</label>
+            <input id="gradient" type="number" value="0.07">
+            <!-- <br><br> -->
+            <label for="offset">Color gradient offset</label>
+            <input id="offset" type="range" value="0">
+            <!-- <br><br> -->
+            <label for="colorScheme">Color Scheme</label>
+            <select id="colorScheme">
+                <option value=1>Raspberry-Mint</option>
+                <option value=0>Sunset</option>
+                <option value=2>Sky and dirt</option>
+                <option value=3>Ocean Luminescence</option>
+                <option value=4>Strawberry-Mint</option>
+                <option value=5>Chromatic</option>
+            </select>
+            <!-- <br><br> -->
+            <select id="fractalType">
+                <option value=0>Mandelbrot Set</option>
+                <option value=2>Cubic Mandelbrot</option>
+                <option value=1>Burning Ship</option>
+                <option value=3>Swan</option>
+                <option value=4>Angel</option>
+                <option value=5>test</option>
+            </select>
+            <!-- <br><br> -->
+            <h2 class="content">Controls</h2>
+            <p>Arrow Keys: move frame</p>
+            <p>WASD: move frame only in mandelbrot set.</p>
+            <p>'=': zoom in</p>
+            <p>'-': zoom out</p>
+            <p>Shift + '=': zoom in only mandelbrot set. (doesn't update screen)</p>
+            <p>Shift + '-': zoom out only mandelbrot set. (doesn't update screen)</p>
+            <p>Click: move focus on point clicked and zoom in</p>
+            <p>Tab: return view to origin and set frame width to 4</p>
+
+        </div>
+        </div>
+    </body>
+</html>
