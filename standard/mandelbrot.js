@@ -177,17 +177,17 @@ document.addEventListener("keydown", function(event) {
                 break;
             case '=': case '+':
                 if(mode || event.key == '+')
-                    frame -= frame/5.0;
+                    frame -= frame/4.0;
                 else
-                    jframe -= jframe/5.0;
+                    jframe -= jframe/4.0;
                 if(event.key != '+')
                     updateView();
                 break;
             case '-': case '_':
                 if(mode || event.key == '_')
-                    frame += frame/4.0;
+                    frame += frame/3.0;
                 else
-                    jframe += jframe/4.0;
+                    jframe += jframe/3.0;
                 if(event.key != '_')
                     updateView();
                 break;
