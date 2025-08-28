@@ -20,6 +20,7 @@ const TAU = PI * 2;
 
 var gradWid = 0.07;
 var offset = 0;
+var shading = true;
 
 var imgData = ctx.getImageData(0,0,view.width,view.height);
 
