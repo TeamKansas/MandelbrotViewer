@@ -79,7 +79,7 @@ function mandelbrot() {
     var xx, yy, tx, cx, cy;
     var i;
     var r, g, b;
-    var index;
+    var index, prev;
 
     var colors = colorScheme[scheme];
     for(var x = 0; x < WID; ++x) {
@@ -110,6 +110,7 @@ function mandelbrot() {
                     }
                 }
             }
+            prev = i;
             index = y*WID*4 + x*4;
             imgData.data[index] = r;
             imgData.data[index + 1] = g;
