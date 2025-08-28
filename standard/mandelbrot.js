@@ -2,6 +2,7 @@ const view = document.getElementById("view");
 const ctx = view.getContext("2d");
 
 const acceptButton = document.getElementById("accept");
+const shadeButton = document.getElementById("shade");
 const goTo = document.getElementById("goTo");
 
 var WID = view.width;
@@ -95,6 +96,18 @@ function mandelbrot() {
                 r = (Math.cos(i*gradWid + colors[0] + offset)*0.5 + 0.5) * 255;
                 g = (Math.sin(i*gradWid + colors[1] + offset)*0.5 + 0.5) * 255;
                 b = (-Math.cos(i*gradWid + colors[2] + offset)*0.5 + 0.5) * 255;
+                if(shading && prev != i) {
+                    if(prev > i) {
+                        r *= 0.8;
+                        g *= 0.8;
+                        b *= 0.8;
+                    }
+                    else if(prev < i) {
+                        r *= 1.1;
+                        g *= 1.1;
+                        b *= 1.1;
+                    }
+                }
             }
             index = y*WID*4 + x*4;
             imgData.data[index] = r;
@@ -233,6 +246,10 @@ view.addEventListener("click", function(event) {
 document.addEventListener("mousemove", function(event) {
     mouse[0] = event.pageX;
     mouse[1] = event.pageY;
+});
+shadeButton.addEventListener("click", function(event) {
+    shading = !shading;
+    shadeButton.textContent = shading ? "On" : "Off";
 });
 
 acceptButton.addEventListener("click", function() {
