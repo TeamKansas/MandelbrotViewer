@@ -19,8 +19,9 @@ const PI = Math.PI;
 const TAU = PI * 2;
 
 var gradWid = 0.07;
-var offset = 0;
-var shading = true;
+var offset = PI;
+var lightStrength = 1.125;
+var darkStrength = 0.75;
 
 var imgData = ctx.getImageData(0,0,view.width,view.height);
 
@@ -29,6 +30,7 @@ var focus = [0,0];
 var jframe = 2;
 var jfocus = [0, 0];
 var mode = true;
+var shading = true;
 
 var colorScheme = [
     [0, TAU/3.0 + 0.5, 2*TAU/3.0 + 0.5],
@@ -79,13 +81,14 @@ function mandelbrot() {
     var xx, yy, tx, cx, cy;
     var i;
     var r, g, b;
-    var index, prev;
+    var prev;
+    var index;
 
     var colors = colorScheme[scheme];
     for(var x = 0; x < WID; ++x) {
         for(var y = 0; y < HEI; ++y) {
-            xx = cx = (x - HWID) / HWID * frame * xratio + focus[0];
-            yy = cy = (y - HHEI) / HHEI * frame * yratio+ focus[1];
+            xx = cx = ((x - HWID) / HWID * frame * xratio + focus[0]);
+            yy = cy = ((y - HHEI) / HHEI * frame * yratio+ focus[1]);
             for(i = 0; i < maxIterations && xx*xx + yy*yy < 4; ++i) {
                 tx = xx;
                 xx = xx*xx - yy*yy + cx;
@@ -99,14 +102,14 @@ function mandelbrot() {
                 b = (-Math.cos(i*gradWid + colors[2] + offset)*0.5 + 0.5) * 255;
                 if(shading && prev != i) {
                     if(prev > i) {
-                        r *= 0.8;
-                        g *= 0.8;
-                        b *= 0.8;
+                        r *= darkStrength;//0.8;
+                        g *= darkStrength;//0.8;
+                        b *= darkStrength;//0.8;
                     }
                     else if(prev < i) {
-                        r *= 1.1;
-                        g *= 1.1;
-                        b *= 1.1;
+                        r *= lightStrength;//1.1;
+                        g *= lightStrength;//1.1;
+                        b *= lightStrength;//1.1;
                     }
                 }
             }
@@ -150,8 +153,9 @@ function julia() {
 }
 
 function updateView() {
-    if(mode)
+    if(mode) {
         mandelbrot();
+    }
     else
         julia();
     ctx.putImageData(imgData,0,0);
@@ -192,17 +196,17 @@ document.addEventListener("keydown", function(event) {
                 break;
             case '=': case '+':
                 if(mode || event.key == '+')
-                    frame -= frame/4.0;
+                    frame -= frame/5.0;
                 else
-                    jframe -= jframe/4.0;
+                    jframe -= jframe/5.0;
                 if(event.key != '+')
                     updateView();
                 break;
             case '-': case '_':
                 if(mode || event.key == '_')
-                    frame += frame/3.0;
+                    frame += frame/4.0;
                 else
-                    jframe += jframe/3.0;
+                    jframe += jframe/4.0;
                 if(event.key != '_')
                     updateView();
                 break;
@@ -224,14 +228,13 @@ document.addEventListener("keydown", function(event) {
                 console.log("Swapped");
                 updateView();
                 break;
-
         }
     }
 });
 
 view.addEventListener("click", function(event) {
-    var clickX = ((mouse[0] - leftCanvas) / HWID) - 1.0;
-    var clickY = ((mouse[1] - topCanvas) / HHEI) - 1.0;
+    var clickX = ((event.pageX - leftCanvas) / HWID) - 1.0;
+    var clickY = ((event.pageY - topCanvas) / HHEI) - 1.0;
     if(mode) {
         focus[0] += clickX * frame * xratio;
         focus[1] += clickY * frame * yratio;
@@ -259,6 +262,8 @@ acceptButton.addEventListener("click", function() {
     gradWid = eval(document.getElementById("gradient").value);
     offset = (document.getElementById("offset").value / 100.0) * TAU;
     scheme = eval(document.getElementById("colorScheme").value);
+    lightStrength = (document.getElementById("shadestrength").value / 200.0) + 1.0;
+    darkStrength = (1.0 - document.getElementById("shadestrength").value / 100.0) ;
 
     WID = view.width = document.getElementById("dimensionsX").value;
     HEI = view.height = document.getElementById("dimensionsY").value;
