@@ -125,11 +125,11 @@ function julia() {
     var xx, yy, tx, cx, cy;
     var i;
     var r, g, b;
-    var index;
+    var index = 0;
 
     colors = colorScheme[scheme];
-    for(var x = 0; x < WID; ++x) {
-        for(var y = 0; y < HEI; ++y) {
+    for(var y = 0; y < WID; ++y) {
+        for(var x = 0; x < HEI; ++x) {
             xx = cx = (x - HWID) / HWID * jframe * xratio + jfocus[0];
             yy = cy = (y - HHEI) / HHEI * jframe * yratio+ jfocus[1];
             for(i = 0; i < maxIterations && xx*xx + yy*yy < 4; ++i) {
@@ -144,10 +144,10 @@ function julia() {
                 g = (Math.sin(i*gradWid + colors[1] + offset)*0.5 + 0.5) * 255;
                 b = (-Math.cos(i*gradWid + colors[2] + offset)*0.5 + 0.5) * 255;
             }
-            index = y*WID*4 + x*4;
-            imgData.data[index] = r;
-            imgData.data[index + 1] = g;
-            imgData.data[index + 2] = b;
+            imgData.data[index++] = r;
+            imgData.data[index++] = g;
+            imgData.data[index++] = b;
+            ++index;
         }
     }
 }
